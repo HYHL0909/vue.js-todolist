@@ -75,13 +75,14 @@ vue todo project
     └───assests
         │   
         └───images
-        │       a.jpg
-        │       b.jpg
+        │       bg.jpg
+        │       bg1.jpg
+        │       checked.svg
+        │       unchecked.svg
         └───styles
-        |       a.css
+        |       global.styl
         |       style.styl
         └────todo
-                footer.jsx
                 header.vue
                 item.vue
                 tabs.vue
@@ -258,48 +259,6 @@ npm i post-css-loader autoprefixer babel-loader babel-loader
 
 根目录下新建 .babelrc 和 postcss.config.js
 
-## 关于 Babel Plugin 和 Babel Preset
-
-Babel插件一般尽可能拆成小的力度，开发者可以按需引进。比如对ES6转ES5的功能，Babel官方拆成了20+个插件。
-
-这样的好处显而易见，既提高了性能，也提高了扩展性。比如开发者想要体验ES6的箭头函数特性，那他只需要引入transform-es2015-arrow-functions插件就可以，而不是加载ES6全家桶。
-
-但很多时候，逐个插件引入的效率比较低下。比如在项目开发中，开发者想要将所有ES6的代码转成ES5，插件逐个引入的方式令人抓狂，不单费力，而且容易出错。
-
-这个时候，可以采用Babel Preset。
-
-可以简单的把Babel Preset视为Babel Plugin的集合。比如babel-preset-es2015就包含了所有跟ES6转换有关的插件。
-
-可以同时使用多个Plugin和Preset，此时，它们的执行顺序非常重要。
-
-先执行完所有Plugin，再执行Preset。
-
-多个Plugin，按照声明次序顺序执行。
-
-多个Preset，按照声明次序逆序执行。
-
-比如.babelrc配置如下，那么执行的顺序为：
-
-Plugin：transform-react-jsx、transform-async-to-generator
-
-Preset：es2016、es2015
-
-```js
-{
-  "plugins": [ 
-    "transform-react-jsx",
-    "transform-async-to-generator"
-  ],
-  "presets": [ 
-    "es2015",
-    "es2016"    
-  ]
-}
-```
-
-footer 使用了jsx, jsx在JS中写HTML，可以进行任意js计算，更开放。
-vue结构更清晰。
-
 ## todo 应用的业务逻辑
 
 在试用vue和react框架进行业务开发时，尽量把顶层数据声明在集中的地方，便于管理数据
@@ -341,3 +300,31 @@ vue 开发已经离不开webpack,前端开发不仅仅是业务开发,学习vue�
 
 github 中搜关键词
 `start-kit`, `best-practice` 可以搜到很多围绕一个框架搭建完整的工程
+
+## 项目详细介绍
+
+TodoList
+
+实现了添加待办，完成待办，删除个别待办及全部待办，筛选待办事项，包括筛选还没有做的和已经完成的。
+
+添加事项，通过监听键盘上回车键按下事件的发生，将数据存储到数据集todos[]里。
+
+数据集格式：
+
+id:id++;
+
+content: e.target.value;
+
+completed:false/true;
+
+完成待办事项 
+
+通过复选框的checked属性修改背景图片。
+
+通过todo.completed  属性绑定样式。
+
+删除事件 
+
+通过子组件删除父组件里的数据，使用emit
+
+筛选：

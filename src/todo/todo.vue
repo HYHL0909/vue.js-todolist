@@ -3,9 +3,9 @@
         <input 
             type="text" 
             class="add-input"
-            autofocus="autofocus"
-            placeholder="接下来做什么"
+            placeholder="添加待办事项..."
             @keyup.enter="addTodo"
+            autofocus
         >
         <Item  
             v-for="todo in filterTodos"
@@ -25,20 +25,19 @@
 <script>
 import Item from './item.vue';
 import Tabs from './tabs.vue';
-import { constants } from 'crypto';
 
 let id = 0;
 
 export default {
+    components: {
+        Item,
+        Tabs
+    },
     data() {
         return {
             todos: [],
             filter: 'all'
         }
-    },
-    components: {
-        Item,
-        Tabs
     },
     computed: {
         filterTodos() {
@@ -56,14 +55,12 @@ export default {
                 content: e.target.value,
                 completed: false
             });
-
             e.target.value = '';
         },
         deleteTodo(id) {
             this.todos.splice(this.todos.findIndex(todo => id === todo.id), 1);
         },
         toggleFilter(state) {
-            console.log(state);
             this.filter = state;
         },
         clearAllCompletedTodo() {
@@ -83,7 +80,7 @@ export default {
     position relative
     margin 0
     width 100%
-    font-size 24px
+    font-size 20px
     font-family inherit
     font-weight inherit 
     line-height 1.4em
